@@ -3,6 +3,8 @@ var util = require('util');
 var BlenoCharacteristic = bleno.Characteristic;
 var tts;
 var ddata = require('./ddata.js');
+var json = require('jsonify');
+
 
 function stringToBytes(string) {
    var array = new Uint8Array(string.length);
@@ -40,6 +42,35 @@ NameChar.prototype.onReadRequest = function(offset, callback) {
 NameChar.prototype.onWriteRequest = function(data, offset, withoutResponse, callback) {
    console.log("recieved " + data);
    var recieved = bytesToString(data);
+   var stuff = json.parse(recieved);
+   var i = 0;
+   this.ddata.displayd = `<html><head><style>
+   .nline {
+    display: table-row;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+   }
+   .render {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: table;
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 0px;
+    border-color: white;
+    }
+   }</head><body>
+   <div class="render">
+    `;
+   for(i = 0; i < stuff.length; i++) {
+       this.ddata.displayd += "<div class='nline'><div style='display: table-cell; width: 100%; text-align: " + stuff[i].align + "; vertical-align: " + stuff[i].valign + "; color: " + stuff[i].color + "; font-size: " + stuff[i].size + "px;'>" + stuff[i].text + "</div></div>";
+   }
+   this.ddata.displayd += "</div></body></html>"
    console.log(this.ddata.displayd);
    callback(this.RESULT_SUCCESS);
 }

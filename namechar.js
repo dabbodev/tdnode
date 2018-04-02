@@ -45,25 +45,7 @@ NameChar.prototype.onWriteRequest = function(data, offset, withoutResponse, call
    var stuff = json.parse(recieved);
    var i = 0;
    this.ddata.displayd = `<html><head><style>
-   .nline {
-    display: table-row;
-    height: 0px;
-    margin: 0px;
-    padding: 0px;
-   }
-   .render {
-    position: relative;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    display: table;
-    box-sizing: border-box;
-    border-style: solid;
-    border-width: 0px;
-    border-color: white;
-    }
+   
    }</head><body>
    <div class="render">
     `;

@@ -44,15 +44,13 @@ NameChar.prototype.onWriteRequest = function(data, offset, withoutResponse, call
    var recieved = bytesToString(data);
    var stuff = json.parse(recieved);
    var i = 0;
-   this.ddata.displayd = `<html><head><style>
-   
-   }</head><body>
+   this.ddata.displayd = `
    <div class="render">
     `;
    for(i = 0; i < stuff.length; i++) {
        this.ddata.displayd += "<div class='nline'><div style='display: table-cell; width: 100%; text-align: " + stuff[i].align + "; vertical-align: " + stuff[i].valign + "; color: " + stuff[i].color + "; font-size: " + stuff[i].size + "px;'>" + stuff[i].text + "</div></div>";
    }
-   this.ddata.displayd += "</div></body></html>"
+   this.ddata.displayd += "</div>"
    console.log(this.ddata.displayd);
    callback(this.RESULT_SUCCESS);
 }

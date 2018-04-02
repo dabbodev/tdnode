@@ -44,10 +44,8 @@ NameChar.prototype.onWriteRequest = function(data, offset, withoutResponse, call
    var recieved = bytesToString(data);
    var stuff = json.parse(recieved);
    var i = 0;
-   this.ddata.displayd = `
-   <div class="render">
-    `;
-   for(i = 0; i < stuff.length; i++) {
+   this.ddata.displayd = '<div class="render" style="background-color: ' + stuff[stuff.length - 1].bgcol + '; border-color: ' + stuff[stuff.length - 1].bdcol + '; border-width: ' + stuff[stuff.length - 1].bdsize + '">';
+   for(i = 0; i < stuff.length - 1; i++) {
        this.ddata.displayd += "<div class='nline'><div style='display: table-cell; width: 100%; text-align: " + stuff[i].align + "; vertical-align: " + stuff[i].valign + "; color: " + stuff[i].color + "; font-size: " + stuff[i].size + "px;'>" + stuff[i].text + "</div></div>";
    }
    this.ddata.displayd += "</div>"

@@ -32,18 +32,17 @@ util.inherits(NameChar, BlenoCharacteristic);
 
 NameChar.prototype.onReadRequest = function(offset, callback) {
    console.log('incoming request');
+   var postpay = this.payload;
    if(!offset) {
        console.log("read success");
-       var postpay = this.payload;
        var sending = Buffer.from(stringToBytes(json.stringify({ "key" : "data", "payload": postpay })));
-       console.log('NameChar - Read: value = ' + json.stringify({ "key" : "data", "payload": postpay }));
+       
       callback(this.RESULT_SUCCESS, sending);
    } else {
-    console.log("read fail " + offset);
-      callback(this.RESULT_INVALID_ATTRIBUTE_LENGTH);
-}
-   
-  
+    var sending = Buffer.from(stringToBytes(json.stringify({ "key" : "data", "payload": postpay }).substring(offset)));
+       
+    callback(this.RESULT_SUCCESS, sending);
+   }
 };
 
 NameChar.prototype.onWriteRequest = function(data, offset, withoutResponse, callback) {

@@ -5,10 +5,9 @@ var tts;
 var ddata = require('./ddata.js');
 var json = require('jsonify');
 
-
 function stringToBytes(string) {
-   var array = new Uint8Array(string.length);
-   for (var i = 0, l = string.length; i < l; i++) {
+    var array = new Uint8Array(string.length);
+    for (var i = 0, l = string.length; i < l; i++) {
        array[i] = string.charCodeAt(i);
     }
     return array.buffer;
@@ -21,21 +20,24 @@ function bytesToString(uintArray) {
 }
 
 var NameChar = function () {
-   bleno.Characteristic.call(this, {
-      uuid: '001f',
-      properties: ['read', 'write']
-   });
-this.ddata = new ddata();
+    bleno.Characteristic.call(this, {
+        uuid: '001f',
+        properties: ['read', 'write']
+    });
+    this.ddata = new ddata();
+    this.payload = {};
 };
+
 util.inherits(NameChar, BlenoCharacteristic);
+
 NameChar.prototype.onReadRequest = function(offset, callback) {
    console.log('incoming request');
    if(!offset) {
-      callback(this.RESULT_SUCCESS, stringToBytes(this.ddata.displayd));
+      callback(this.RESULT_SUCCESS, stringToBytes(json.stringify(this.payload)));
    } else {
       callback(this.RESULT_INVALID_ATTRIBUTE_LENGTH);
 }
-   console.log('NameChar - Read: value = ' + this.ddata.displayd);
+   console.log('NameChar - Read: value = ' + this.payload);
   
 };
 
@@ -45,6 +47,7 @@ NameChar.prototype.onWriteRequest = function(data, offset, withoutResponse, call
     var stuff = json.parse(recieved);
     if (stuff.key == "data") {
         stuff = stuff.payload;
+        this.payload = stuff;
         var i = 0;
         bleno.stopAdvertising();
         bleno.startAdvertising(stuff[0].text, ['9f97d296-442a-4e30-8209-b2f71753ffae']);

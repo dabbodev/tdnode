@@ -34,7 +34,7 @@ http.createServer(app).listen(4500);
 bleno.on('stateChange', function(state) {
    console.log('bleno turning ' + state);
    if (state === 'poweredOn') {
-      bleno.startAdvertising('Display #a6F9', [service.uuid]);
+      bleno.startAdvertising('New Display', [service.uuid]);
    } else {
       bleno.stopAdvertising();
    }

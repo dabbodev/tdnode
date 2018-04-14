@@ -40,17 +40,21 @@ NameChar.prototype.onReadRequest = function(offset, callback) {
 };
 
 NameChar.prototype.onWriteRequest = function(data, offset, withoutResponse, callback) {
-   console.log("recieved " + data);
-   var recieved = bytesToString(data);
-   var stuff = json.parse(recieved);
-   var i = 0;
-   this.ddata.displayd = '<div class="render" style="background-color: ' + stuff[stuff.length - 1].bg.bgcol + '; border-color: ' + stuff[stuff.length - 1].bg.bdcol + '; border-width: ' + stuff[stuff.length - 1].bg.bdsize + '">';
-   for(i = 0; i < stuff.length - 1; i++) {
-       this.ddata.displayd += "<div class='nline'><div style='display: table-cell; width: 100%; text-align: " + stuff[i].align + "; vertical-align: " + stuff[i].valign + "; color: " + stuff[i].color + "; font-size: " + stuff[i].size + "px;'>" + stuff[i].text + "</div></div>";
-   }
-   this.ddata.displayd += "</div>"
-   console.log(this.ddata.displayd);
-   callback(this.RESULT_SUCCESS);
+    console.log("recieved " + data);
+    var recieved = bytesToString(data);
+    var stuff = json.parse(recieved);
+    if (stuff.key == "data") {
+        stuff = stuff.payload;
+        var i = 0;
+        bleno.stopAdvertising();
+        bleno.startAdvertising(stuff[0].text, ['9f97d296-442a-4e30-8209-b2f71753ffae']);
+        this.ddata.displayd = '<div class="render" style="background-color: ' + stuff[stuff.length - 1].bg.bgcol + '; border-color: ' + stuff[stuff.length - 1].bg.bdcol + '; border-width: ' + stuff[stuff.length - 1].bg.bdsize + '">';
+        for(i = 0; i < stuff.length - 1; i++) {
+            this.ddata.displayd += "<div class='nline'><div style='display: table-cell; width: 100%; text-align: " + stuff[i].align + "; vertical-align: " + stuff[i].valign + "; color: " + stuff[i].color + "; font-size: " + stuff[i].size + "px;'>" + stuff[i].text + "</div></div>";
+        }
+        this.ddata.displayd += "</div>";
+        callback(this.RESULT_SUCCESS);
+    }
 }
 
 module.exports = NameChar;

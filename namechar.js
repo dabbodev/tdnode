@@ -25,7 +25,7 @@ var NameChar = function () {
         properties: ['read', 'write']
     });
     this.ddata = new ddata();
-    this.payload = {};
+    this.payload = [];
 };
 
 util.inherits(NameChar, BlenoCharacteristic);

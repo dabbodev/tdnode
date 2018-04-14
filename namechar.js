@@ -35,13 +35,14 @@ NameChar.prototype.onReadRequest = function(offset, callback) {
    if(!offset) {
        console.log("read success");
        var postpay = this.payload;
-       var sending = Buffer.from(stringToBytes(json.stringify({"key": "data", "payload": postpay})));
+       var sending = Buffer.from(stringToBytes(json.stringify({ "key" : "data", "payload": postpay })));
+       console.log('NameChar - Read: value = ' + json.stringify({ "key" : "data", "payload": postpay }));
       callback(this.RESULT_SUCCESS, sending);
    } else {
     console.log("read fail");
       callback(this.RESULT_INVALID_ATTRIBUTE_LENGTH);
 }
-   console.log('NameChar - Read: value = ' + this.payload);
+   
   
 };
 

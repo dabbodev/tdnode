@@ -34,7 +34,7 @@ NameChar.prototype.onReadRequest = function(offset, callback) {
    console.log('incoming request');
    if(!offset) {
        console.log("read success");
-      callback(this.RESULT_SUCCESS, Buffer.from(stringToBytes(json.stringify(this.payload))));
+      callback(this.RESULT_SUCCESS, Buffer.from(stringToBytes(json.stringify({"key": "data", "payload": this.payload}))));
    } else {
     console.log("read fail");
       callback(this.RESULT_INVALID_ATTRIBUTE_LENGTH);

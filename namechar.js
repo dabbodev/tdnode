@@ -39,7 +39,7 @@ NameChar.prototype.onReadRequest = function(offset, callback) {
        console.log('NameChar - Read: value = ' + json.stringify({ "key" : "data", "payload": postpay }));
       callback(this.RESULT_SUCCESS, sending);
    } else {
-    console.log("read fail");
+    console.log("read fail " + offset);
       callback(this.RESULT_INVALID_ATTRIBUTE_LENGTH);
 }
    

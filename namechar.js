@@ -10,7 +10,7 @@ function stringToBytes(string) {
     for (var i = 0, l = string.length; i < l; i++) {
        array[i] = string.charCodeAt(i);
     }
-    return array.buffer;
+    return array;
 }
 
 function bytesToString(uintArray) {
@@ -34,7 +34,7 @@ NameChar.prototype.onReadRequest = function(offset, callback) {
    console.log('incoming request');
    if(!offset) {
        console.log("read success");
-      callback(this.RESULT_SUCCESS, stringToBytes(json.stringify(this.payload)));
+      callback(this.RESULT_SUCCESS, Buffer.from(stringToBytes(json.stringify(this.payload))));
    } else {
     console.log("read fail");
       callback(this.RESULT_INVALID_ATTRIBUTE_LENGTH);

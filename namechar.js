@@ -19,13 +19,15 @@ function bytesToString(uintArray) {
     return decodedString;
 }
 
-var NameChar = function () {
+class NameChar{
+    constructor() {
     bleno.Characteristic.call(this, {
         uuid: '001f',
         properties: ['read', 'write']
     });
     this.ddata = new ddata();
     this.payload = [{'text': "Please connect to New Display"}];
+}
 };
 
 util.inherits(NameChar, BlenoCharacteristic);
